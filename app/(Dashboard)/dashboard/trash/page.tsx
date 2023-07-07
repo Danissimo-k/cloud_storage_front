@@ -1,11 +1,8 @@
 import {NextPage} from "next";
 import {checkAuth} from "@/utils/checkAuth";
-import styles from './styles.module.scss'
-import {Dashboard} from "@/app/(Dashboard)/dashboard/Dashboard";
 import * as Api from '@/api'
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
-import {TrashDashboard} from "@/app/(Dashboard)/dashboard/trash/TrashDashboard";
 import {Files} from "@/components/Files/Files";
 
 

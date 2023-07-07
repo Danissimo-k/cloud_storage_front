@@ -30,8 +30,8 @@ export const Files: FC<FilesProps> = ({items, withActions}) => {
         await Api.files.remove(selectedIds)
     }
 
-    const onShare = () => {
-        alert('share')
+    const onShare = async () => {
+        await Api.files.downloads(selectedIds)
     }
 
     return (
@@ -41,6 +41,7 @@ export const Files: FC<FilesProps> = ({items, withActions}) => {
                     <>
                         {withActions && (
                             <FileActions
+                                selectedIds={selectedIds}
                                 onClickRemove={onClickRemove}
                                 onClickShare={onShare}
                                 isActive={selectedIds.length > 0}

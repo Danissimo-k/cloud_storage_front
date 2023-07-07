@@ -5,7 +5,7 @@ import {redirect} from "next/navigation";
 
 export type FileType = 'other' | 'trash'
 
-export const getAllFiles = async (type: FileType = 'other', token=''): Promise<FileItem[]> => {
+export const getAllFiles = async (type: FileType = 'other', token = ''): Promise<FileItem[]> => {
     try {
         const {data} = await axios.get('/files?type=' + type, {
             headers: {
@@ -31,9 +31,9 @@ export const uploadFile = async (options) => {
     formData.append("file", file)
 
     const config = {
-        headers: { "Content-Type" : "multipart/form-data" },
+        headers: {"Content-Type": "multipart/form-data"},
         onProgress: (event: ProgressEvent) => {
-            onProgress({ percent: (event.loaded / event.total) * 100 })
+            onProgress({percent: (event.loaded / event.total) * 100})
         }
     }
 
@@ -48,4 +48,28 @@ export const uploadFile = async (options) => {
 
     }
 
+}
+
+export const downloads = async (fileIds: string[]) => {
+    try {
+        const response = await axios.get('files/download', {
+            responseType: 'arraybuffer',
+            params: {
+                ids: fileIds.join(',')
+            }
+        })
+        const contentDisposition = response.headers['content-disposition']
+        const fileName = contentDisposition.slice(contentDisposition.indexOf('filename="') + 'filename="'.length , -1)
+        const href = URL.createObjectURL(new Blob([response.data], {type: "octet/stream"}));
+        const link = document.createElement('a');
+        link.href = href;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(href);
+    } catch (error) {
+        console.log(error)
+    }
 }

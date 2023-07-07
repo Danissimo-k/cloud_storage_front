@@ -2,22 +2,25 @@
 import React, {FC} from 'react';
 import styles from './FileActions.module.scss'
 import {Button, Popconfirm} from "antd";
+import {logout} from "@/api/auth";
 
 interface FileActionsProps {
     onClickRemove: VoidFunction;
     onClickShare: VoidFunction;
     isActive: boolean;
+    selectedIds: string[];
 }
 
 export const FileActions: FC<FileActionsProps> = ({
                                                       onClickRemove,
                                                       onClickShare,
-                                                      isActive
+                                                      isActive,
+                                                      selectedIds
                                                   }) => {
     return (
         <div className={styles.root}>
             <Button onClick={onClickShare} disabled={!isActive}>
-                Поделиться
+                {selectedIds.length > 1 ? 'Загрузить архив' : 'Загрузить файл'}
             </Button>
             <Popconfirm
                 title={"Удалить файл(ы)?"}

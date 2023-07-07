@@ -4,7 +4,6 @@ import styles from "@/app/(Dashboard)/dashboard/styles.module.scss";
 import {UploadButton} from "@/components/UploadButton/UploadButton";
 import {Menu} from "antd";
 import {DeleteOutlined, FileOutlined} from "@ant-design/icons";
-import {FileList} from "@/components/FileList/FileList";
 import React from "react";
 
 export default function RootLayout({
